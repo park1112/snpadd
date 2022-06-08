@@ -5,13 +5,16 @@ export default function ProductSelect({
   dispatch,
   ACTION_TYPES,
   selectItem,
+  bgimage,
+  setBgimage,
+  countAdd,
 }) {
   const [nameSelect, setNameSelect] = useState(''); //양파 선택됨!
   const [weightSelect, setWeightSelect] = useState(-1); //무게 선택됨!
   const [division, setDivisionSelect] = useState(-1); //구분 선택됨!
   const [fitment, setFitmentSelect] = useState(-1); //부자제 선택됨!
   const [count, setCount] = useState(-1); //수량 선택됨!
-  const [bgimage, setBgimage] = useState('');
+  const [fitCount, setFitCount] = useState(1); //부자제 수량 선택
 
   const sendPost = () => {
     const list = {
@@ -21,6 +24,7 @@ export default function ProductSelect({
       division: selectItem.items[0].weight[weightSelect].division[division],
       fitment: selectItem.items[0].weight[weightSelect].부자제[fitment],
       count: selectItem.items[0].weight[weightSelect].수량[count],
+      fitmentCount: fitCount,
     };
     dispatch({ type: ACTION_TYPES.endItemSelect, payload: list });
 
@@ -29,6 +33,8 @@ export default function ProductSelect({
     setDivisionSelect(-1);
     setFitmentSelect(-1);
     setCount(-1);
+    setFitCount(1);
+    // countAdd();
   };
   return (
     <>
@@ -178,12 +184,28 @@ export default function ProductSelect({
               </span>
             ))}
           </div>
+          <div className="col-span-2 sm:col-span-2 lg:col-span-2 mb-4">
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium text-gray-700"
+            >
+              부자제 수량
+            </label>
+            <input
+              value={fitCount}
+              onChange={(e) => setFitCount(Number(e.target.value))}
+              type="number"
+              name="fitCount"
+              id="fitCount"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
         </div>
       ) : null}
       {/* 수량선택 !!!끝! */}
       {/* 버튼추가! !!!시작 */}
       {count > -1 ? (
-        <div className="px-4 py-3  text-right sm:px-6">
+        <div className="px-4 py-3 mb-20  text-right sm:px-6">
           <button
             type="submit"
             // disabled={!name && !selectedFile}

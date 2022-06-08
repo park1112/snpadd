@@ -127,7 +127,7 @@ export default function Comboboxes() {
           <div className=" py-6 px-4 space-y-6 sm:p-6">
             <div>
               <h3 className="text-lg leading-6 font-medium text-white">
-                거래처 등록
+                거래처 등록 입출고 등록 💊 🇰🇷
               </h3>
               <p className="mt-1 text-sm text-gray-500">
                 여기에 거래처, 농가, 작업팀, 모든 정보를 입력하시면 됩니다.

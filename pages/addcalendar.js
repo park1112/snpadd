@@ -1,44 +1,42 @@
 import Head from 'next/head';
-
+import Feed from '../components/Feed';
 import Sidebar from '../components/Sidebar';
-
+import Widgets from '../components/Widgets';
 import { getProviders, getSession, useSession } from 'next-auth/react';
 import Login from '../components/Login';
 import Modal from '../components/Modal';
 import { modalState } from '../atoms/modalAtom';
 import { useRecoilState } from 'recoil';
-import AddProduct from '../components/productSelect/AddProduct';
+import Search from '../components/Search';
+import BringAdd from '../components/BringAdd';
 
-import useTime from '../hooks/useTime';
-import TodoList from '../components/TodoList';
-import { useRouter } from 'next/router';
-import AddCalender from '../components/AddCalender';
+import useFirebase from '../hooks/useFirebase';
+import { useState } from 'react';
+import AddCal from '../components/AddCal';
 
-const people = [
-  {
-    name: '개인',
-    place: '합천유통2공장',
-    title: '하양상회',
-    email: '중500개',
-    role: '중짜리만 담아서 보내주세요',
-  },
-  {
-    name: '시장',
-    place: '합천유통1공장',
-    title: '구리 인터넷청과',
-    email: '15키로 7바렛',
-    role: '6줄7줄 보내주세요',
-  },
-  // More people...
-];
-
-//
-
-export default function Addcalender({ providers }) {
+export default function Bring({ providers }) {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useRecoilState(modalState);
-  const router = useRouter();
-  const time = useTime();
+
+  const db = useFirebase('product', '구분');
+
+  //   function data() {
+  //     posts.forEach((doc) => {
+  //       //   console.log(doc.data());
+  //     });
+  //   }
+  //   data();
+
+  //데이터 불러오기
+
+  //데이터 저장하기
+  const [loading, setLoading] = useState(false);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const datadb = useFirebase('inandout', 'client');
+  const clientdb = useFirebase('client', 'timestamp');
+
   // 세션이 없으면 로그인 페이지로 간다 !
   if (!session) return <Login providers={providers} />;
 
@@ -49,39 +47,22 @@ export default function Addcalender({ providers }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="bg-black min-h-screen flex max-w-[1500px] mx-auto">
+      <div className="h-full flex">
+        {/* Sidebar 추가 */}
         <Sidebar />
-        <div className="flex-grow border-l  border-gray-700 max-w-3xl sm:ml-[73px] xl:ml-[370px]">
-          <div className="m-5">
-            <div className="sm:flex sm:items-center">
-              <div className="sm:flex-auto">
-                <h1 className="text-xl font-semibold text-white">{time}</h1>
-                <p className="mt-2 text-sm text-gray-700">
-                  하루 일정을 등록하여 주세요 .
-                </p>
-              </div>
-              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <button
-                  onClick={() => router.push('/addcalender')}
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                >
-                  일정 추가
-                </button>
-              </div>
-            </div>
-            <TodoList people={people} />
-            <AddCalender />
+
+        {/* Content area */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Search 추가 */}
+          <Search />
+          {/* Main content */}
+          <div className="flex-1 flex items-stretch overflow-hidden">
+            <main className="flex-1 overflow-y-auto">
+              <AddCal />
+            </main>
           </div>
         </div>
-
-        {/* <Widgets
-          trendingResults={trendingResults}
-          followResults={followResults}
-        /> */}
-
-        {isOpen && <Modal />}
-      </main>
+      </div>
     </div>
   );
 }

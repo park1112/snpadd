@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import ProductSelect from './ProductSelect';
 import SelectItem from './SelectItem';
 import React from 'react';
@@ -102,7 +102,7 @@ const product = [
   },
 ];
 
-export default function AddProduct(selectProduct) {
+export default function AddProduct(selectProduct, setAddList) {
   const [selectItem, dispatch] = useReducer(reducer, selectProduct);
 
   return (

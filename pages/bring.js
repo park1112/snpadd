@@ -20,7 +20,7 @@ export default function Bring({ trendingResults, followResults, providers }) {
   return (
     <div className="">
       <Head>
-        <title>에스엔피 / 🔥입출고 등록⚡💊</title>
+        <title>/ 🔥입출고 등록⚡💊</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

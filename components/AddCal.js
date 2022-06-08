@@ -24,8 +24,8 @@ import Post from './Post';
 import { useRouter } from 'next/router';
 
 const steps = [
-  { name: '에스엔피 입출고', href: '#', status: 'complete' },
-  { name: '입출고등록', href: '#', status: 'current' },
+  { name: '에스엔피 일정', href: '#', status: 'complete' },
+  { name: '일정등록', href: '#', status: 'current' },
   { name: '일정확인', href: '#', status: 'upcoming' },
 ];
 
@@ -151,7 +151,7 @@ const reducer = (state, action) => {
 
 //추가 끝
 
-export default function BringAdd() {
+export default function AddCal(datadb, clientdb) {
   const router = useRouter();
   const [selectItem, dispatch] = useReducer(reducer, selectProduct);
   const { data: session } = useSession();
